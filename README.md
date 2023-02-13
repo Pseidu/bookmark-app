@@ -26,6 +26,9 @@ Validar que la URL es correcta
 [Mozilla - Regular Expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 [RegEx Playground Tool](https://regexr.com/) para probar nuestras expresiones regulares
 
+[Splice method for arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
+Es el método que utilizaremos para eliminar una posición determinada del array de bookmarks (un determinado bookmark).
+
 **Uso habitual de LOCALSTORAGE**
 localStorage.setItem('myCat', 'Tom');
 const cat = localStorage.getItem('myCat');
@@ -33,3 +36,7 @@ localStorage.removeItem('myCat');
 localStorage.clear();
 **Además**, cuando enviamos información a LOCALSTORAGE, igual que cuando enviamos información a un servidor, debe ser un string. Por tanto, tendremos que usar JSON.stringify.
 Para el proceso inverso (de LOCALSTORAGE al script js) usaremos JSON.parse
+
+**Posibles mejoras**
+Añado al repositorio *script2.js*. Es igual al original pero cambiando el array *bookmarks* por un objeto.El objetivo es mejorar el rendimiento.
+En este caso es inapreciable, pero si el array fuera muy grande (10.000 o más elementos), la búsqueda y sobre todo la reescritura consumirían un tiempo considerable. Esto no sucedería si utilizáramos objetos. De ahí, la mejora.

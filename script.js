@@ -35,6 +35,40 @@ function validate(nameValue, urlValue) {
     return true;
 }
 
+// Add boobkmarks to DOM
+function buildBookmarks() {
+    // Remove current bookmarks elements in DOM
+    bookmarksContainer.textContent = '';
+    // Build items
+    bookmarks.forEach((item) => {
+        const { name, url} = item; //deconstruct
+        // Create HTML div.item
+        const bookmark = document.createElement('div');
+        bookmark.classList.add('item');
+        // Create close icon
+        const closeIcon = document.createElement('i');
+        closeIcon.classList.add('fa-solid', 'fa-xmark');
+        closeIcon.setAttribute('title', 'Delete Bookmark');
+        closeIcon.setAttribute('onclick', `deleteBookmark('${url}')`);
+        // Create container for favicon & link (div.name)
+        const linkInfo = document.createElement('div');
+        linkInfo.classList.add('name');
+        // Create favicon
+        const favicon = document.createElement('img');
+        favicon.setAttribute('src', `https://www.google.com/s2/favicons?domain=${url}`);
+        favicon.setAttribute('alt', 'Favicon');
+        // Create link
+        const link = document.createElement('a');
+        link.setAttribute('href', `${url}`);
+        link.setAttribute('target', '_blank');
+        link.textContent = name;
+        // Join everything together
+        linkInfo.append(favicon, link);
+        bookmark.append(closeIcon, linkInfo);
+        bookmarksContainer.appendChild(bookmark);
+    });
+
+}
 // Fetch bookmarks from localStorage
 function fetchBookmarks() {
     // Get bookmarks from localStorage if available
@@ -50,7 +84,19 @@ function fetchBookmarks() {
         ];
         localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     }
-    console.log(bookmarks);
+    buildBookmarks();
+}
+
+// Delete bookmark
+function deleteBookmark(url) {
+    bookmarks.forEach((item, i) => {
+        if (item.url === url) {
+            bookmarks.splice(i, 1);
+        }
+    });
+    // Update localStorage and rewrite DOM
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    fetchBookmarks();
 }
 
 // Handle data from Form
